@@ -16,10 +16,15 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     var centralManager: CBCentralManager!
     var timer = Timer()
     let BLEService_UUID = CBUUID(string: "09fc6363-0292-447a-9757-0210f9a728ed")
+    let BLECharacteristic_UUID_RX = CBUUID(string: "09fc6364-0292-447a-9757-0210f9a728ed")
+    let BLECharacteristic_UUID_TX = CBUUID(string: "09fc6365-0292-447a-9757-0210f9a728ed")
     var peripherals: [CBPeripheral] = []
     var RSSIs = [NSNumber]()
     var blePeripheral: CBPeripheral?
+    var rxCharacteristic: CBCharacteristic?
+    var txCharacteristic: CBCharacteristic?
     var data = NSMutableData()
+    var characteristicASCIIValue = NSString()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,4 +112,50 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         }
         print("Discovered services: \(services)")
     }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        print("*******************************************************")
+        
+        if error != nil {
+            print("Error discovering services: \(error!.localizedDescription)")
+        }
+        
+        guard let characteristics = service.characteristics else {
+            return
+        }
+        
+        print("Found \(characteristics.count) characteristics")
+        
+        for characteristic in characteristics {
+            if characteristic.uuid.isEqual(BLECharacteristic_UUID_RX) {
+                rxCharacteristic = characteristic
+                peripheral.setNotifyValue(true, for: rxCharacteristic!)
+                peripheral.readValue(for: characteristic)
+                print("Rx Characteristic: \(characteristic.uuid)")
+            }
+            if characteristic.uuid.isEqual(BLECharacteristic_UUID_TX) {
+                txCharacteristic = characteristic
+                print("Tx Characteristic: \(characteristic.uuid)")
+            }
+            peripheral.discoverDescriptors(for: characteristic)
+        }
+    }
+    
+    func disconnectFromDevice() {
+        if blePeripheral != nil {
+            centralManager?.cancelPeripheralConnection(blePeripheral!)
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if characteristic == rxCharacteristic {
+            if let ASCIIstring = NSString(data: characteristic.value!, encoding: String.Encoding.utf8.rawValue) {
+                characteristicASCIIValue = ASCIIstring
+                print("Value received: \(characteristicASCIIValue as String)")
+                NotificationCenter.default.post(name:NSNotification.Name(rawValue: "Notify"), object: nil)
+            }
+        }
+    }
+    
+    
 }
