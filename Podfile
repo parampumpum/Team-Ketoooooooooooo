@@ -6,7 +6,7 @@ target 'FirebaseDemo' do
   use_frameworks!
   
   # Pods for FirebaseDemo
-  pod 'Charts/Realm'
+  pod 'ChartsRealm'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
 end
