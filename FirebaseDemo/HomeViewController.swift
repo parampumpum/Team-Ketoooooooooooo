@@ -28,7 +28,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+        //centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
     @IBAction func handleLogout(_ target: UIBarButtonItem) {
