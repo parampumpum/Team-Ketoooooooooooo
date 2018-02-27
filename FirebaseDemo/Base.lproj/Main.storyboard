@@ -435,17 +435,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Logged in!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTk-HU-Lq8">
-                                <rect key="frame" x="132" y="323" width="111" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5I8-uV-k0k" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="213" width="375" height="454"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTE-Wh-y46">
+                                <rect key="frame" x="284" y="134" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="LXa-0e-I21"/>
+                                </constraints>
+                                <state key="normal" title="Go"/>
+                                <connections>
+                                    <action selector="btnButton:" destination="bB4-2i-FPZ" eventType="touchUpInside" id="kGb-bq-Nd6"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Add a value" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hhf-1T-Fon">
+                                <rect key="frame" x="54" y="134" width="145" height="30"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fTk-HU-Lq8" firstAttribute="centerY" secondItem="LQR-kh-zzd" secondAttribute="centerY" id="rhg-mn-GRp"/>
-                            <constraint firstItem="fTk-HU-Lq8" firstAttribute="centerX" secondItem="LQR-kh-zzd" secondAttribute="centerX" id="s9n-ls-xsz"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="leading" secondItem="LQR-kh-zzd" secondAttribute="leading" id="1fb-hL-GAW"/>
+                            <constraint firstItem="hhf-1T-Fon" firstAttribute="leading" secondItem="16K-Ut-RNW" secondAttribute="leading" constant="54" id="6mF-rv-bm6"/>
+                            <constraint firstItem="hhf-1T-Fon" firstAttribute="top" secondItem="dNP-GL-98i" secondAttribute="bottom" constant="70" id="7Cb-ym-wL3"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="top" secondItem="hhf-1T-Fon" secondAttribute="bottom" constant="49" id="SME-IP-SaL"/>
+                            <constraint firstItem="hhf-1T-Fon" firstAttribute="top" secondItem="HTE-Wh-y46" secondAttribute="top" id="UQW-fv-lVa"/>
+                            <constraint firstItem="HTE-Wh-y46" firstAttribute="leading" secondItem="hhf-1T-Fon" secondAttribute="trailing" constant="85" id="WKh-sX-zUa"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="bottom" secondItem="owG-I9-MRc" secondAttribute="top" id="cBV-w3-91K"/>
+                            <constraint firstAttribute="trailing" secondItem="5I8-uV-k0k" secondAttribute="trailing" id="hF8-kZ-zl9"/>
+                            <constraint firstItem="16K-Ut-RNW" firstAttribute="trailing" secondItem="HTE-Wh-y46" secondAttribute="trailing" constant="45" id="rpL-xE-qnD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="16K-Ut-RNW"/>
                     </view>
@@ -456,10 +477,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="chtChart" destination="5I8-uV-k0k" id="P1g-bt-H9G"/>
+                        <outlet property="txtTextBox" destination="hhf-1T-Fon" id="e3E-Eg-jl6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9hA-hs-4ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5372" y="-392"/>
+            <point key="canvasLocation" x="5372" y="-392.65367316341832"/>
         </scene>
         <!--InitialViewController-->
         <scene sceneID="Ac5-VT-PDo">
