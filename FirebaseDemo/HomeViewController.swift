@@ -37,6 +37,10 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         //centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func handleLogout(_ target: UIBarButtonItem) {
         try! Auth.auth().signOut()
         self.dismiss(animated: false, completion: nil)
