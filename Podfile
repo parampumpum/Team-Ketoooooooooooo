@@ -9,4 +9,5 @@ target 'FirebaseDemo' do
   pod 'Charts'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 end
