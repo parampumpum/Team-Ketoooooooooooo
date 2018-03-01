@@ -164,7 +164,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
                     if error == nil {
                         print("User display name changed!")
                         //self.dismiss(animated: false, completion: nil)  //dismiss back to main screen
-                        self.performSegue(withIdentifier: "toStatsScreen", sender: self)
+                        self.performSegue(withIdentifier: "toPhysicalStats", sender: self)
                     }
                 }
                 

@@ -10,6 +10,7 @@
 		4D09CA1F1FAB7FA9002E6597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D09CA1E1FAB7FA8002E6597 /* GoogleService-Info.plist */; };
 		4D09CA211FAB8797002E6597 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09CA201FAB8797002E6597 /* HomeViewController.swift */; };
 		5B20627320297124002E9AB3 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20627220297124002E9AB3 /* CoreBluetooth.framework */; };
+		5BC203B02047503400546C59 /* UserPhysicalStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC203AF2047503400546C59 /* UserPhysicalStatsViewController.swift */; };
 		79C3FEE2895F17B904AFE2D5 /* Pods_FirebaseDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06DF8F45B4C3F8D5036317BA /* Pods_FirebaseDemo.framework */; };
 		B0E106A71F69FE98005FFE97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E106A61F69FE98005FFE97 /* AppDelegate.swift */; };
 		B0E106A91F69FE98005FFE97 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E106A81F69FE98005FFE97 /* MenuViewController.swift */; };
@@ -30,6 +31,7 @@
 		4D09CA1E1FAB7FA8002E6597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4D09CA201FAB8797002E6597 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5B20627220297124002E9AB3 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		5BC203AF2047503400546C59 /* UserPhysicalStatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPhysicalStatsViewController.swift; sourceTree = "<group>"; };
 		B0E106A31F69FE98005FFE97 /* FirebaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0E106A61F69FE98005FFE97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0E106A81F69FE98005FFE97 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				B0E106AD1F69FE98005FFE97 /* Assets.xcassets */,
 				B0E106AF1F69FE98005FFE97 /* LaunchScreen.storyboard */,
 				B0E106B21F69FE98005FFE97 /* Info.plist */,
+				5BC203AF2047503400546C59 /* UserPhysicalStatsViewController.swift */,
 			);
 			path = FirebaseDemo;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				B0E106A91F69FE98005FFE97 /* MenuViewController.swift in Sources */,
 				4D09CA211FAB8797002E6597 /* HomeViewController.swift in Sources */,
 				B0E106A71F69FE98005FFE97 /* AppDelegate.swift in Sources */,
+				5BC203B02047503400546C59 /* UserPhysicalStatsViewController.swift in Sources */,
 				B0E106BD1F69FF76005FFE97 /* RoundedWhiteButton.swift in Sources */,
 				B0E106BE1F69FF76005FFE97 /* InitialViewController.swift in Sources */,
 				B0E106BF1F69FF76005FFE97 /* SignUpViewController.swift in Sources */,

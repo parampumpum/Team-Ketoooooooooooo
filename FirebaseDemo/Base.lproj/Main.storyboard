@@ -327,9 +327,6 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
-                                                        <connections>
-                                                            <segue destination="1Gt-zp-jbp" kind="show" identifier="toStatsScreen" id="sRz-cj-sww"/>
-                                                        </connections>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDu-14-fPF">
                                                         <rect key="frame" x="12" y="249" width="279" height="1"/>
@@ -420,6 +417,7 @@
                         <outlet property="emailField" destination="fbO-no-a6o" id="mCf-ci-yy1"/>
                         <outlet property="passwordField" destination="27J-h1-xcG" id="USd-Yb-MU0"/>
                         <outlet property="usernameField" destination="ak5-xW-Esh" id="FD0-Zo-Jid"/>
+                        <segue destination="1Gt-zp-jbp" kind="show" identifier="toPhysicalStats" id="QN0-v7-Lx7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0YW-B2-lBE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -721,11 +719,9 @@
                     </view>
                     <connections>
                         <outlet property="ageField" destination="8CH-ep-HJG" id="J1c-46-wjX"/>
-                        <outlet property="emailField" destination="flB-PE-hUg" id="qDU-Ag-fS5"/>
                         <outlet property="heightField" destination="f65-Oz-UyA" id="FpO-BC-kZy"/>
-                        <outlet property="passwordField" destination="8CH-ep-HJG" id="UUD-GH-C6C"/>
-                        <outlet property="usernameField" destination="f65-Oz-UyA" id="IUb-QB-ERH"/>
                         <outlet property="weightField" destination="flB-PE-hUg" id="kQw-cA-Hzv"/>
+                        <segue destination="T3J-dR-qTg" kind="show" identifier="statsToMain" id="lfo-8s-ved"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4l0-FJ-GO6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -737,4 +733,7 @@
         <image name="backArrow" width="25" height="25"/>
         <image name="firebaselogo" width="180" height="180"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="lfo-8s-ved"/>
+    </inferredMetricsTieBreakers>
 </document>
