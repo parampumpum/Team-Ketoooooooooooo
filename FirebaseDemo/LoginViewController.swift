@@ -16,6 +16,7 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
     
     var continueButton:RoundedWhiteButton!
     var activityView:UIActivityIndicatorView!
+    var errorLabel:UILabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,6 +147,7 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
             if error == nil && user != nil {
                 self.dismiss(animated: false, completion: nil)
             } else {
+                
                 print("Error logging in: \(error?.localizedDescription)")
             }
         }
