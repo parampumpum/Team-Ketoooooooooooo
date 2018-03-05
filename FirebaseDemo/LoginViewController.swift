@@ -18,6 +18,10 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
     var activityView:UIActivityIndicatorView!
     var errorLabel:UILabel = UILabel()
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,7 +156,7 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
                     self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 350, height: 100))
                     self.errorLabel.text = "The password is invalid."
                     self.errorLabel.textColor = UIColor.yellow
-                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)
+                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 200)
                     self.errorLabel.adjustsFontSizeToFitWidth = true
                     self.errorLabel.textAlignment = NSTextAlignment.center
                     self.emailField.text = ""
@@ -163,7 +167,7 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
                     self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 350, height: 100))
                     self.errorLabel.text = "There is no user record corresponding to this identifier."
                     self.errorLabel.textColor = UIColor.yellow
-                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)
+                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 200)
                     self.errorLabel.adjustsFontSizeToFitWidth = true
                     self.errorLabel.textAlignment = NSTextAlignment.center
                     self.emailField.text = ""
@@ -174,7 +178,7 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
                     self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
                     self.errorLabel.text = "The email address is badly formatted."
                     self.errorLabel.textColor = UIColor.yellow
-                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)
+                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 200)
                     self.errorLabel.adjustsFontSizeToFitWidth = true
                     self.errorLabel.textAlignment = NSTextAlignment.center
                     self.emailField.text = ""
@@ -182,6 +186,7 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
                     self.view.addSubview(self.errorLabel)
                 }
                 print("Error logging in: \(error?.localizedDescription)")
+                self.continueButton.setTitle("Continue", for: .normal)
             }
         }
     }

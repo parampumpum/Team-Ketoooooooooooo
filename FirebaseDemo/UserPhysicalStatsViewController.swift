@@ -106,7 +106,7 @@ class UserPhysicalStatsViewController: UIViewController, UITextFieldDelegate {
             let unwrappedHeight = height!
             let unwrappedWeight = weight!
             let unwrappedAge = age!
-            let formComplete = (unwrappedHeight.matches("[0-9]'[0-9]{1,2}\"") || unwrappedHeight.matches("[0-9]'")) && unwrappedWeight.matches("[0-9]+") && unwrappedAge.matches("[0-9]+")
+            let formComplete = (unwrappedHeight.matches("[0-9].[0-9]{1,2}") || unwrappedHeight.matches("[0-9]'")) && unwrappedWeight.matches("[0-9]+") && unwrappedAge.matches("[0-9]+")
             setContinueButton(enabled: formComplete)
         } else {
             setContinueButton(enabled: formFilled)
@@ -154,7 +154,7 @@ class UserPhysicalStatsViewController: UIViewController, UITextFieldDelegate {
         guard let weightString = weightField.text else { return }
         guard let ageString = ageField.text else { return }
         
-        let height = heightString.matches("[0-9]'[0-9]{1,2}\"") ? heightString : nil
+        let height = heightString.matches("[0-9].[0-9]{1,2}") ? heightString : nil
         let weight = weightString.matches("[0-9]+") ? Int(weightString) : nil
         let age = ageString.matches("[0-9]+") ? Int(ageString) : nil
         
