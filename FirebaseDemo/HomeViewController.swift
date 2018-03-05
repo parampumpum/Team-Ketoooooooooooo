@@ -186,7 +186,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         }
         
         let line1 = LineChartDataSet(values: lineChartEntry, label: "Number") //Here we convert lineChartEntry to a LineChartDataSet
-        line1.colors = [NSUIColor.blue] //Sets the colour to blue
+        line1.colors = [NSUIColor.yellow] //Sets the colour to blue
         
         let data = LineChartData() //This is the object that will be added to the chart
         data.addDataSet(line1) //Adds the line to the dataSet
