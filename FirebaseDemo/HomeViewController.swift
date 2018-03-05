@@ -35,6 +35,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     override func viewDidLoad() {
         super.viewDidLoad()
         //centralManager = CBCentralManager(delegate: self, queue: nil)
+        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -172,6 +173,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         numbers.append(input!) //here we add the data to the array.
         updateGraph()
     }
+    
     func updateGraph(){
         var lineChartEntry  = [ChartDataEntry]() //this is the Array that will eventually be displayed on the graph.
         
