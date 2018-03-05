@@ -172,7 +172,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
             } else {
                 if error?.localizedDescription == "The email address is already in use by another account." {
                     self.errorLabel.removeFromSuperview()
-                    self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
+                    self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
                     self.errorLabel.text = "This email address is already in use by another account."
                     self.errorLabel.textColor = UIColor.yellow
                     self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)
@@ -184,7 +184,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
                     self.view.addSubview(self.errorLabel)
                 } else if error?.localizedDescription == "The password must be 6 characters long or more." {
                     self.errorLabel.removeFromSuperview()
-                    self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
+                    self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
                     self.errorLabel.text = "Password must be 6 characters or longer."
                     self.errorLabel.textColor = UIColor.yellow
                     self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)

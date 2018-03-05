@@ -191,7 +191,7 @@ Apache License
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2016 Daniel Cohen Gindi & Philipp Jahoda
+   Copyright {yyyy} {name of copyright owner}
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -209,27 +209,27 @@ Apache License
 
 ## Firebase
 
-Copyright 2018 Google
+Copyright 2017 Google
 
 ## FirebaseAnalytics
 
-Copyright 2018 Google
+Copyright 2017 Google
 
 ## FirebaseAuth
 
-Copyright 2018 Google
+Copyright 2017 Google
 
 ## FirebaseCore
 
-Copyright 2018 Google
+Copyright 2017 Google
 
 ## FirebaseDatabase
 
-Copyright 2018 Google
+Copyright 2017 Google
 
 ## FirebaseInstanceID
 
-Copyright 2018 Google
+Copyright 2017 Google
 
 ## GTMSessionFetcher
 
