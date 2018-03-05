@@ -147,7 +147,29 @@ class LoginViewController:UIViewController, UITextFieldDelegate {
             if error == nil && user != nil {
                 self.dismiss(animated: false, completion: nil)
             } else {
-                
+                if error?.localizedDescription == "The password is invalid or the user does not have a password." {
+                    self.errorLabel.removeFromSuperview()
+                    self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
+                    self.errorLabel.text = "The password is invalid or the user does not have a password."
+                    self.errorLabel.textColor = UIColor.yellow
+                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)
+                    self.errorLabel.adjustsFontSizeToFitWidth = true
+                    self.errorLabel.textAlignment = NSTextAlignment.center
+                    self.emailField.text = ""
+                    self.passwordField.text = ""
+                    self.view.addSubview(self.errorLabel)
+                } else if error?.localizedDescription == "There is no user record corresponding to this identifier. The user may have been deleted." {
+                    self.errorLabel.removeFromSuperview()
+                    self.errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 100))
+                    self.errorLabel.text = "The password is invalid or the user does not have a password."
+                    self.errorLabel.textColor = UIColor.yellow
+                    self.errorLabel.center = CGPoint(x: self.view.center.x, y: self.view.frame.height - self.errorLabel.frame.height - 74)
+                    self.errorLabel.adjustsFontSizeToFitWidth = true
+                    self.errorLabel.textAlignment = NSTextAlignment.center
+                    self.emailField.text = ""
+                    self.passwordField.text = ""
+                    self.view.addSubview(self.errorLabel)
+                }
                 print("Error logging in: \(error?.localizedDescription)")
             }
         }
