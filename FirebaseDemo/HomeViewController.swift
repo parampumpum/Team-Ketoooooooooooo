@@ -36,6 +36,55 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         super.viewDidLoad()
         //centralManager = CBCentralManager(delegate: self, queue: nil)
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
+        //updateGraph()
+        let ref = Database.database().reference().child("users")
+        let childRef = ref.child((Auth.auth().currentUser?.uid)!)
+        let dataRef = childRef.child("data")
+        
+        
+        //here is the for loop
+        var i = 0
+        var handle: DatabaseHandle?
+        handle = dataRef.observe(.value, with: { (snapshot) in
+            if let values = snapshot.value  {
+                let castedArray = values as! [Double]
+                print(castedArray)
+                self.numbers = []
+                for level in castedArray {
+                    self.numbers.append(level)
+                    print(level)
+                    print(i)
+                    i += 1
+                }
+            }
+        })
+        //updateGraph()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let ref = Database.database().reference().child("users")
+        let childRef = ref.child((Auth.auth().currentUser?.uid)!)
+        let dataRef = childRef.child("data")
+        
+        
+        //here is the for loop
+        var i = 0
+        var handle: DatabaseHandle?
+        handle = dataRef.observe(.value, with: { (snapshot) in
+            if let values = snapshot.value  {
+                let castedArray = values as! [Double]
+                print(castedArray)
+                self.numbers = []
+                for level in castedArray {
+                    self.numbers.append(level)
+                    print(level)
+                    print(i)
+                    i += 1
+                }
+            }
+        })
+        updateGraph()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -169,18 +218,15 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     }
     
     @IBAction func btnButton(_ sender: Any) {
-        let input  = Double(txtTextBox.text!) //gets input from the textbox - expects input as double/int
-        numbers.append(input!) //here we add the data to the array.
+        //let input  = Double(txtTextBox.text!) //gets input from the textbox - expects input as double/int
+        //numbers.append(input!) //here we add the data to the array.
         updateGraph()
     }
     
     func updateGraph(){
         var lineChartEntry  = [ChartDataEntry]() //this is the Array that will eventually be displayed on the graph.
         
-        
-        //here is the for loop
         for i in 0..<numbers.count {
-            
             let value = ChartDataEntry(x: Double(i), y: numbers[i]) // here we set the X and Y status in a data chart entry
             lineChartEntry.append(value) // here we add it to the data set
         }
