@@ -26,6 +26,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     var txCharacteristic: CBCharacteristic?
     var data = NSMutableData()
     var characteristicASCIIValue = NSString()
+    var dataHandler: DatabaseHandle?
     
     @IBOutlet weak var txtTextBox: UITextField!
     @IBOutlet weak var chtChart: LineChartView!
@@ -44,8 +45,8 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         
         //here is the for loop
         var i = 0
-        var handle: DatabaseHandle?
-        handle = dataRef.observe(.value, with: { (snapshot) in
+        //var handle: DatabaseHandle?
+        _ = dataRef.observe(.value, with: { (snapshot) in
             if let values = snapshot.value  {
                 let castedArray = values as! [Double]
                 print(castedArray)
@@ -70,8 +71,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         
         //here is the for loop
         var i = 0
-        var handle: DatabaseHandle?
-        handle = dataRef.observe(.value, with: { (snapshot) in
+        dataHandler = dataRef.observe(.value, with: { (snapshot) in
             if let values = snapshot.value  {
                 let castedArray = values as! [Double]
                 print(castedArray)
@@ -93,6 +93,10 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     
     @IBAction func handleLogout(_ sender: UIButton) {
         try! Auth.auth().signOut()
+        let ref = Database.database().reference().child("users")
+        let childRef = ref.child((Auth.auth().currentUser?.uid)!)
+        let dataRef = childRef.child("data")
+        dataRef.removeObserver(withHandle: dataHandler!)
         self.performSegue(withIdentifier: "backToHomePortal", sender: self)
     }
     

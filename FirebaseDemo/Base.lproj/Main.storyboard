@@ -446,11 +446,14 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTE-Wh-y46">
-                                <rect key="frame" x="269" y="46" width="76" height="69"/>
+                                <rect key="frame" x="255" y="46" width="90" height="69"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="CcN-Ff-pUQ"/>
+                                </constraints>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
-                                        <fragment content="GO!">
+                                        <fragment content="Refresh">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.40286037470000002" blue="0.34405355199999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" metaFont="system" size="24"/>
@@ -465,32 +468,39 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EzZ-A6-FDU">
                                 <rect key="frame" x="269" y="20" width="91" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="64d-Oc-9cd"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Logout"/>
                                 <connections>
                                     <action selector="handleLogout:" destination="bB4-2i-FPZ" eventType="touchUpInside" id="V9Y-2Q-ANQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kV5-e8-0l4">
+                                <rect key="frame" x="16" y="22" width="172" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Add New Ketone Level"/>
+                                <connections>
+                                    <segue destination="u8j-Yq-q5Q" kind="show" id="1xN-xj-84g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="EzZ-A6-FDU" firstAttribute="leading" secondItem="HTE-Wh-y46" secondAttribute="leading" id="8Eq-wt-IB9"/>
-                            <constraint firstItem="16K-Ut-RNW" firstAttribute="trailing" secondItem="HTE-Wh-y46" secondAttribute="trailing" constant="30" id="AEO-zl-0wm"/>
-                            <constraint firstItem="EzZ-A6-FDU" firstAttribute="leading" secondItem="16K-Ut-RNW" secondAttribute="leading" constant="269" id="CkS-bW-p1v"/>
-                            <constraint firstItem="EzZ-A6-FDU" firstAttribute="top" secondItem="16K-Ut-RNW" secondAttribute="top" id="G8E-us-bQU"/>
-                            <constraint firstItem="16K-Ut-RNW" firstAttribute="trailing" secondItem="EzZ-A6-FDU" secondAttribute="trailing" constant="15" id="NgO-9i-NIf"/>
-                            <constraint firstAttribute="trailing" secondItem="5I8-uV-k0k" secondAttribute="trailing" id="QBJ-G3-wMw"/>
-                            <constraint firstItem="hhf-1T-Fon" firstAttribute="leading" secondItem="16K-Ut-RNW" secondAttribute="leading" constant="25" id="UNd-2v-yRU"/>
-                            <constraint firstItem="hhf-1T-Fon" firstAttribute="top" secondItem="dNP-GL-98i" secondAttribute="bottom" constant="47" id="Wih-th-80C"/>
-                            <constraint firstItem="HTE-Wh-y46" firstAttribute="top" secondItem="dNP-GL-98i" secondAttribute="bottom" constant="26" id="Z7g-wo-l8f"/>
-                            <constraint firstItem="5I8-uV-k0k" firstAttribute="top" secondItem="HTE-Wh-y46" secondAttribute="bottom" constant="57" id="ecr-em-f8l"/>
-                            <constraint firstItem="5I8-uV-k0k" firstAttribute="top" secondItem="hhf-1T-Fon" secondAttribute="bottom" constant="72" id="f4Q-3b-411"/>
-                            <constraint firstItem="5I8-uV-k0k" firstAttribute="bottom" secondItem="owG-I9-MRc" secondAttribute="top" id="rTz-95-pyj"/>
-                            <constraint firstItem="HTE-Wh-y46" firstAttribute="leading" secondItem="hhf-1T-Fon" secondAttribute="trailing" constant="58" id="sNH-ru-wq6"/>
-                            <constraint firstItem="5I8-uV-k0k" firstAttribute="leading" secondItem="LQR-kh-zzd" secondAttribute="leading" id="vD3-Zq-MHA"/>
+                            <constraint firstItem="kV5-e8-0l4" firstAttribute="centerY" secondItem="EzZ-A6-FDU" secondAttribute="centerY" id="0Nf-6Z-YLp"/>
+                            <constraint firstItem="kV5-e8-0l4" firstAttribute="top" secondItem="dNP-GL-98i" secondAttribute="bottom" constant="2" id="4Ah-lS-xO2"/>
+                            <constraint firstItem="kV5-e8-0l4" firstAttribute="leading" secondItem="LQR-kh-zzd" secondAttribute="leadingMargin" id="6iu-eh-Tf5"/>
+                            <constraint firstItem="hhf-1T-Fon" firstAttribute="top" secondItem="kV5-e8-0l4" secondAttribute="bottom" constant="12" id="84o-pW-6Ww"/>
+                            <constraint firstItem="HTE-Wh-y46" firstAttribute="leading" secondItem="kV5-e8-0l4" secondAttribute="trailing" constant="67" id="DPA-i6-EkW"/>
+                            <constraint firstItem="EzZ-A6-FDU" firstAttribute="leading" secondItem="kV5-e8-0l4" secondAttribute="trailing" constant="81" id="Dzf-Un-acI"/>
+                            <constraint firstItem="HTE-Wh-y46" firstAttribute="top" secondItem="dNP-GL-98i" secondAttribute="bottom" constant="26" id="I48-vr-ovn"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="leading" secondItem="LQR-kh-zzd" secondAttribute="leading" id="Kve-QZ-2jU"/>
+                            <constraint firstItem="hhf-1T-Fon" firstAttribute="leading" secondItem="16K-Ut-RNW" secondAttribute="leading" constant="25" id="P0D-NC-dPL"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="bottom" secondItem="owG-I9-MRc" secondAttribute="top" id="RNJ-0b-Ha3"/>
+                            <constraint firstItem="EzZ-A6-FDU" firstAttribute="top" secondItem="16K-Ut-RNW" secondAttribute="top" id="TuP-Rd-Cvg"/>
+                            <constraint firstItem="HTE-Wh-y46" firstAttribute="leading" secondItem="hhf-1T-Fon" secondAttribute="trailing" constant="44" id="Y2X-Nj-Mfw"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="top" secondItem="hhf-1T-Fon" secondAttribute="bottom" constant="72" id="YJC-BS-liM"/>
+                            <constraint firstItem="16K-Ut-RNW" firstAttribute="trailing" secondItem="EzZ-A6-FDU" secondAttribute="trailing" constant="15" id="sLJ-Qh-4TJ"/>
+                            <constraint firstAttribute="trailing" secondItem="5I8-uV-k0k" secondAttribute="trailing" id="umM-Qu-Geb"/>
+                            <constraint firstItem="5I8-uV-k0k" firstAttribute="top" secondItem="HTE-Wh-y46" secondAttribute="bottom" constant="57" id="vhA-9S-cgd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="16K-Ut-RNW"/>
                     </view>
@@ -510,6 +520,67 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9hA-hs-4ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4536.8000000000002" y="-398.05097451274366"/>
+        </scene>
+        <!--Add New Ketone Level View Controller-->
+        <scene sceneID="o6V-F8-U1c">
+            <objects>
+                <viewController id="u8j-Yq-q5Q" customClass="AddNewKetoneLevelViewController" customModule="FirebaseDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TKS-TY-5pM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetoothlogo" translatesAutoresizingMaskIntoConstraints="NO" id="Mrz-kE-tFz">
+                                <rect key="frame" x="67" y="58" width="240" height="258"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adding New Ketone Level!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OA9-hU-yAM">
+                                <rect key="frame" x="44" y="363" width="286" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Ccw-WY-Z7a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ketone Level:  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23e-hU-osZ">
+                                <rect key="frame" x="116" y="444" width="142" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="sVd-EW-vQD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tlQ-9k-hUR">
+                                <rect key="frame" x="16" y="20" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelAdd:" destination="u8j-Yq-q5Q" eventType="touchUpInside" id="pJV-2s-Wso"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="OA9-hU-yAM" firstAttribute="centerX" secondItem="23e-hU-osZ" secondAttribute="centerX" id="1fB-oJ-Inq"/>
+                            <constraint firstItem="Mrz-kE-tFz" firstAttribute="top" secondItem="4Y8-Bt-XGt" secondAttribute="top" constant="38" id="2XZ-ae-HId"/>
+                            <constraint firstItem="Mrz-kE-tFz" firstAttribute="leading" secondItem="4Y8-Bt-XGt" secondAttribute="leading" constant="67" id="6fj-F1-zzH"/>
+                            <constraint firstItem="23e-hU-osZ" firstAttribute="leading" secondItem="4Y8-Bt-XGt" secondAttribute="leading" constant="116" id="6uD-1B-bZh"/>
+                            <constraint firstItem="23e-hU-osZ" firstAttribute="top" secondItem="OA9-hU-yAM" secondAttribute="bottom" constant="51" id="NvX-uY-jZH"/>
+                            <constraint firstItem="OA9-hU-yAM" firstAttribute="leading" secondItem="4Y8-Bt-XGt" secondAttribute="leading" constant="44" id="RJC-Ad-348"/>
+                            <constraint firstItem="4Y8-Bt-XGt" firstAttribute="bottom" secondItem="23e-hU-osZ" secondAttribute="bottom" constant="202" id="V3h-CW-x6L"/>
+                            <constraint firstItem="Mrz-kE-tFz" firstAttribute="centerX" secondItem="TKS-TY-5pM" secondAttribute="centerX" id="lyj-Wh-4bj"/>
+                            <constraint firstItem="Mrz-kE-tFz" firstAttribute="centerX" secondItem="OA9-hU-yAM" secondAttribute="centerX" id="rOO-Ak-DfK"/>
+                            <constraint firstItem="OA9-hU-yAM" firstAttribute="top" secondItem="Mrz-kE-tFz" secondAttribute="bottom" constant="47" id="zOq-ho-9Fn"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4Y8-Bt-XGt"/>
+                    </view>
+                    <connections>
+                        <outlet property="ketoneLevelLabel" destination="23e-hU-osZ" id="aKN-kK-lrb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="48c-eO-I2v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5693.6000000000004" y="-398.05097451274366"/>
         </scene>
         <!--InitialViewController-->
         <scene sceneID="Ac5-VT-PDo">
@@ -724,10 +795,11 @@
     </scenes>
     <resources>
         <image name="backArrow" width="25" height="25"/>
+        <image name="bluetoothlogo" width="182" height="277"/>
         <image name="firebaselogo" width="180" height="180"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YcR-F0-cTA"/>
+        <segue reference="cLm-e7-Ybb"/>
         <segue reference="qyT-5a-WUM"/>
     </inferredMetricsTieBreakers>
 </document>
