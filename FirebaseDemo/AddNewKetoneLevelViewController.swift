@@ -32,14 +32,29 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         switch central.state {
         case .poweredOff:
             message = "Bluetooth on this device is currently powered off."
+            print(message)
+            ketoneLevelLabel.text = message
+            ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         case .unsupported:
             message = "This device does not support Bluetooth Low Energy."
+            print(message)
+            ketoneLevelLabel.text = message
+            ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         case .unauthorized:
             message = "This app is not authorized to use Bluetooth Low Energy."
+            print(message)
+            ketoneLevelLabel.text = message
+            ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         case .resetting:
             message = "The BLE Manager is resetting; a state update is pending."
+            print(message)
+            ketoneLevelLabel.text = message
+            ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         case .unknown:
             message = "The state of the BLE Manager is unknown."
+            print(message)
+            ketoneLevelLabel.text = message
+            ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         case .poweredOn:
             showMessage = false
             message = "Bluetooth LE is turned on and ready for communication."
