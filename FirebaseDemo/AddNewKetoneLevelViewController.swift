@@ -19,7 +19,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     var scanning = false
     let timerScanInterval:TimeInterval = 2.0
     let timerPauseInterval:TimeInterval = 10.0
-    let breathalyzerName = "HC-08"
+    let breathalyzerName = "SH-HC-08"
     
     @IBAction func cancelAdd(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -170,10 +170,11 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
      This method is invoked when a call to connectPeripheral:options: is successful.
      You typically implement this method to set the peripheral’s delegate and to discover its services.
      */
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("successfully connected to the peripheral!")
         
         ketoneLevelLabel.text = "Connected"
+        ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         
         // Now that we've successfully connected to the breathalyzer, let's discover the services.
         // - NOTE:  we pass nil here to request ALL services be discovered.
@@ -190,6 +191,8 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
      */
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         print("connection to breathalyzer failed")
+        ketoneLevelLabel.text = "Fail to connect"
+        ketoneLevelLabel.adjustsFontSizeToFitWidth = true
     }
     
     /*
