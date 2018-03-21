@@ -92,11 +92,11 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     }
     
     @IBAction func handleLogout(_ sender: UIButton) {
-        try! Auth.auth().signOut()
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
         dataRef.removeObserver(withHandle: dataHandler!)
+        try! Auth.auth().signOut()
         self.performSegue(withIdentifier: "backToHomePortal", sender: self)
     }
     
