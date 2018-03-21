@@ -19,7 +19,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     var scanning = false
     let timerScanInterval:TimeInterval = 2.0
     let timerPauseInterval:TimeInterval = 10.0
-    let breathalyzerName = "STM32"
+    let breathalyzerName = "HC-08"
     
     @IBAction func cancelAdd(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
