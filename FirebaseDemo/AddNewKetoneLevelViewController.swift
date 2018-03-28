@@ -263,12 +263,14 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             //let enableBytes = NSData(bytes: &enableValue, length: sizeof(UInt8))
             
             for characteristic in characteristics {
-                // Temperature Data Characteristic
-                //if characteristic.UUID == CBUUID(string: Device.TemperatureDataUUID) {
-                    // Enable the IR Temperature Sensor notifications
-                  //  temperatureCharacteristic = characteristic
-                   // sensorTag?.setNotifyValue(true, forCharacteristic: characteristic)
-                //}
+                //Voltage Data Characteristic
+                if characteristic.uuid == CBUUID(string: "FFE1") {
+                    //Enable the IR Temperature Sensor notifications
+                    ketoneLevelLabel.text = "Found Ketone Characteristic"
+                    ketoneCharacteristic = characteristic
+                    breathalyzer?.setNotifyValue(true, for: characteristic)
+                    break
+                }
             }
         }
     }
@@ -305,7 +307,8 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         let value = data.withUnsafeBytes { (ptr: UnsafePointer<Double>) -> Double in
             return ptr.pointee
         }
-        print(value)
+        print("Data: \(data)")
+        print("Value: \(value)")
         ketoneLevelLabel.text = "Ketone Level: \(value)"
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
