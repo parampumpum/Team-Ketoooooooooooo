@@ -207,6 +207,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("disconnected from breathalyzer")
         ketoneLevelLabel.text = "Disconnected"
+        ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         if error != nil {
             print("disconnection details: \(error!.localizedDescription)")
         }
@@ -233,12 +234,12 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         // Core Bluetooth creates an array of CBService objects —- one for each service that is discovered on the peripheral.
         if let services = peripheral.services {
             for service in services {
-                print("Discovered service \(service)")
+                print("Discovered service \(service) \(service.uuid)")
                 // If we found either the temperature or the humidity service, discover the characteristics for those services.
-                //if (service.UUID == CBUUID(string: Device.TemperatureServiceUUID)) ||
-                  //  (service.UUID == CBUUID(string: Device.HumidityServiceUUID)) {
-                peripheral.discoverCharacteristics(nil, for: service)
-                //}
+                if ( service.uuid == CBUUID(string: "FFE0"))
+                {
+                    peripheral.discoverCharacteristics(nil, for: service)
+                }
             }
         }
     }
@@ -267,6 +268,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
                 if characteristic.uuid == CBUUID(string: "FFE1") {
                     //Enable the IR Temperature Sensor notifications
                     ketoneLevelLabel.text = "Found Ketone Characteristic"
+                    ketoneLevelLabel.adjustsFontSizeToFitWidth = true
                     ketoneCharacteristic = characteristic
                     breathalyzer?.setNotifyValue(true, for: characteristic)
                     break
@@ -307,9 +309,15 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         let value = data.withUnsafeBytes { (ptr: UnsafePointer<Double>) -> Double in
             return ptr.pointee
         }
+        var newValue = value
+        for i in 0...317 {
+            newValue = newValue * 10
+        }
         print("Data: \(data)")
         print("Value: \(value)")
-        ketoneLevelLabel.text = "Ketone Level: \(value)"
+        print("New Value: \(newValue)")
+        ketoneLevelLabel.text = "Ketone Level: \(newValue)"
+        ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
@@ -331,7 +339,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         })
         dataBlock.append(value)
         dataRef.setValue(dataBlock)
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
     }
     
 }

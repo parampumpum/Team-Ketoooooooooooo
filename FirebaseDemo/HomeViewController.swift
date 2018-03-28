@@ -48,15 +48,19 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         //var handle: DatabaseHandle?
         _ = dataRef.observe(.value, with: { (snapshot) in
             if let values = snapshot.value  {
-                let castedArray = values as! [Double]
-                print(castedArray)
-                self.numbers = []
-                for level in castedArray {
-                    self.numbers.append(level)
-                    print(level)
-                    print(i)
-                    i += 1
+                
+                let castedArray = values as? [Double]
+                if castedArray != nil {
+                    print(castedArray)
+                    self.numbers = []
+                    for level in castedArray! {
+                        self.numbers.append(level)
+                        print(level)
+                        print(i)
+                        i += 1
+                    }
                 }
+                
             }
         })
         //updateGraph()
@@ -73,15 +77,19 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         var i = 0
         dataHandler = dataRef.observe(.value, with: { (snapshot) in
             if let values = snapshot.value  {
-                let castedArray = values as! [Double]
-                print(castedArray)
-                self.numbers = []
-                for level in castedArray {
-                    self.numbers.append(level)
-                    print(level)
-                    print(i)
-                    i += 1
+                
+                let castedArray = values as? [Double]
+                if castedArray != nil {
+                    print(castedArray)
+                    self.numbers = []
+                    for level in castedArray! {
+                        self.numbers.append(level)
+                        print(level)
+                        print(i)
+                        i += 1
+                    }
                 }
+                
             }
         })
         updateGraph()
