@@ -12,6 +12,7 @@ import Foundation
 class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ketoneLevelLabel: UILabel!
     var centralManager: CBCentralManager!
     var breathalyzer: CBPeripheral?
@@ -20,6 +21,10 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     let timerScanInterval:TimeInterval = 2.0
     let timerPauseInterval:TimeInterval = 10.0
     let breathalyzerName = "SH-HC-08"
+    var numbers = [Double]()
+    let delay = 5.0
+    var queueFlag = true
+    var semaphore: DispatchSemaphore = DispatchSemaphore(value: 1)
     
     @IBAction func cancelAdd(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -64,8 +69,15 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             ketoneLevelLabel.adjustsFontSizeToFitWidth = true
             scanning = true
             _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
-            centralManager.scanForPeripherals(withServices: nil, options: nil)
-            
+            if breathalyzer == nil {
+                centralManager.scanForPeripherals(withServices: nil, options: nil)
+            } else {
+                breathalyzer!.delegate = self
+                centralManager.connect(breathalyzer!, options: nil)
+                print("breathalyzer found, connecting")
+                ketoneLevelLabel.text = "breathalyzer found, connecting"
+                ketoneLevelLabel.adjustsFontSizeToFitWidth = true
+            }
             // Option 2: Scan for devices that have the service you're interested in...
             //let sensorTagAdvertisingUUID = CBUUID(string: Device.SensorTagAdvertisingUUID)
             //print("Scanning for SensorTag adverstising with UUID: \(sensorTagAdvertisingUUID)")
@@ -98,7 +110,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        semaphore = DispatchSemaphore(value: 1)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -175,6 +187,8 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         
         ketoneLevelLabel.text = "Connected"
         ketoneLevelLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.text = "Please breathe out for \(delay) seconds"
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         // Now that we've successfully connected to the breathalyzer, let's discover the services.
         // - NOTE:  we pass nil here to request ALL services be discovered.
@@ -270,7 +284,17 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
                     ketoneLevelLabel.text = "Found Ketone Characteristic"
                     ketoneLevelLabel.adjustsFontSizeToFitWidth = true
                     ketoneCharacteristic = characteristic
-                    breathalyzer?.setNotifyValue(true, for: characteristic)
+                    let alertController = UIAlertController(title: "Press Yes to Continue Reading", message: "Press 'Yes' to begin reading, or press 'No' to return", preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (alert) in
+                        self.breathalyzer?.setNotifyValue(true, for: characteristic)
+                    })
+                    let noAction = UIAlertAction(title: "No", style: .cancel, handler: { (alert) in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                    alertController.addAction(yesAction)
+                    alertController.addAction(noAction)
+                    self.present(alertController, animated: true, completion: nil)
+                    //self.breathalyzer?.setNotifyValue(true, for: characteristic)
                     break
                 }
             }
@@ -321,24 +345,50 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
-        var dataBlock = [Double]()
+        //var dataBlock = [Double]()
         //here is the for loop
         var i = 0
         var handle: DatabaseHandle?
-        handle = dataRef.observe(.value, with: { (snapshot) in
-            if let values = snapshot.value  {
-                let castedArray = values as! [Double]
-                print(castedArray)
-                for level in castedArray {
-                    dataBlock.append(level)
-                    print(level)
-                    print(i)
-                    i += 1
+        if (newValue > 200000) {
+            return
+        }
+        semaphore.wait()
+        if (queueFlag) {
+            queueFlag = false
+            handle = dataRef.observe(.value, with: { (snapshot) in
+                if let values = snapshot.value  {
+                    let castedArray = values as? [Double]
+                    if castedArray != nil {
+                        //print(castedArray!)
+                        for level in castedArray! {
+                            //dataBlock.append(level)
+                            //print(level)
+                            //print(i)
+                            i += 1
+                            self.numbers.append(level)
+                        }
+                    }
                 }
+            })
+            for second in 0..<Int(delay) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(second), execute: {
+                    self.titleLabel.text = "Please breathe out for \(Int(self.delay) - second) seconds"
+                    self.titleLabel.adjustsFontSizeToFitWidth = true
+                })
             }
-        })
-        dataBlock.append(value)
-        dataRef.setValue(dataBlock)
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+                print (self.numbers)
+                self.numbers.append(newValue)
+                dataRef.setValue(self.numbers)
+                self.numbers = []
+                self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
+                self.dismiss(animated: true, completion: nil)
+            })
+            semaphore.signal()
+        } else {
+            semaphore.signal()
+            return
+        }
         //self.dismiss(animated: true, completion: nil)
     }
     

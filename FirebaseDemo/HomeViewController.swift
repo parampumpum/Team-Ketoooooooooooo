@@ -42,7 +42,6 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
         
-        
         //here is the for loop
         var i = 0
         //var handle: DatabaseHandle?
@@ -71,7 +70,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
-        
+        //dataRef.setValue(numbers)
         
         //here is the for loop
         var i = 0
