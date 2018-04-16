@@ -173,9 +173,9 @@ class UserPhysicalStatsViewController: UIViewController, UITextFieldDelegate {
         let dataRef = childRef.child("data")
         let statBlock = ["height": height! as String, "weight": String(weight!), "age": String(age!)]
         //let dataBlock = ["0": 32.4, "1": 35.6, "2": 3.4]
-        let dict = ["0": 2.4, "1": 3.6, "2": 1.2]
+        //let dict = ["0": 2.4, "1": 3.6, "2": 1.2]
         statsRef.setValue(statBlock)
-        dataRef.setValue(dict)
+        //dataRef.setValue(dict)
         self.performSegue(withIdentifier: "statsToMain", sender: self)
     }
 }

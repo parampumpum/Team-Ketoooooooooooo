@@ -8,6 +8,7 @@ import UIKit
 import Firebase
 import CoreBluetooth
 import Foundation
+import Darwin
 
 class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
@@ -25,6 +26,8 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     let delay = 5.0
     var queueFlag = true
     var semaphore: DispatchSemaphore = DispatchSemaphore(value: 1)
+    let sensorResistance: Double = 10000
+    let r0:Double = 4105
     
     @IBAction func cancelAdd(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -330,15 +333,23 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     }
 
     func updateDisplay(_ data: Data) {
-        let value = data.withUnsafeBytes { (ptr: UnsafePointer<Double>) -> Double in
-            return ptr.pointee
+//        let value = data.withUnsafeBytes { (ptr: UnsafePointer<Double>) -> Double in
+//            return ptr.pointee
+//        }
+//        var newValue = value
+//        for i in 0...317 {
+//            newValue = newValue * 10
+//        }
+        var value: Int = 0
+        if let dataString = String(data: data, encoding: .utf8) {
+            value = Int(dataString.trimmingCharacters(in: .whitespacesAndNewlines))!
+            print("Data: \(dataString)")
         }
-        var newValue = value
-        for i in 0...317 {
-            newValue = newValue * 10
-        }
-        print("Data: \(data)")
+        let rS = (Double(5 - (Double(value) * 0.0048)) / Double(Double(value) * 0.0048)) * sensorResistance
+        let logValue = ((log10(rS/r0) * -2.6) + 2.7)
+        let newValue = pow(10, logValue)
         print("Value: \(value)")
+        print("Log Value: \(logValue)")
         print("New Value: \(newValue)")
         ketoneLevelLabel.text = "Ketone Level: \(newValue)"
         ketoneLevelLabel.adjustsFontSizeToFitWidth = true
@@ -349,7 +360,10 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         //here is the for loop
         var i = 0
         var handle: DatabaseHandle?
-        if (newValue > 200000) {
+//        if (newValue > 200000) {
+//            return
+//        }
+        if (value == 0) {
             return
         }
         semaphore.wait()
@@ -378,7 +392,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
                 print (self.numbers)
-                self.numbers.append(newValue)
+                self.numbers.append(Double(newValue))
                 dataRef.setValue(self.numbers)
                 self.numbers = []
                 self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
