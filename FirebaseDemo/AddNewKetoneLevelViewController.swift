@@ -348,10 +348,12 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         let rS = (Double(5 - (Double(value) * 0.0048)) / Double(Double(value) * 0.0048)) * sensorResistance
         let logValue = ((log10(rS/r0) * -2.6) + 2.7)
         let newValue = pow(10, logValue)
+        let ppmInMMOL = (newValue / 1000.0) / 58.08
+        let scaledPPMInMMOL = ppmInMMOL * 1000.0
         print("Value: \(value)")
         print("Log Value: \(logValue)")
         print("New Value: \(newValue)")
-        ketoneLevelLabel.text = "Ketone Level: \(newValue)"
+        ketoneLevelLabel.text = "Ketone Level: \(scaledPPMInMMOL)"
         ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
@@ -392,7 +394,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
                 print (self.numbers)
-                self.numbers.append(Double(newValue))
+                self.numbers.append(Double(scaledPPMInMMOL))
                 dataRef.setValue(self.numbers)
                 self.numbers = []
                 self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
