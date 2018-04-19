@@ -22,7 +22,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     let timerScanInterval:TimeInterval = 2.0
     let timerPauseInterval:TimeInterval = 10.0
     let breathalyzerName = "SH-HC-08"
-    var numbers = [Double]()
+    var numbers = [String:Double]()
     let delay = 5.0
     var queueFlag = true
     var semaphore: DispatchSemaphore = DispatchSemaphore(value: 1)
@@ -345,15 +345,22 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             value = Int(dataString.trimmingCharacters(in: .whitespacesAndNewlines))!
             print("Data: \(dataString)")
         }
-        let rS = (Double(5 - (Double(value) * 0.0048)) / Double(Double(value) * 0.0048)) * sensorResistance
-        let logValue = ((log10(rS/r0) * -2.6) + 2.7)
-        let newValue = pow(10, logValue)
-        let ppmInMMOL = (newValue / 1000.0) / 58.08
-        let scaledPPMInMMOL = ppmInMMOL * 1000.0
+        let baseline = 15575.0
+        let inter1 = Double(value) * 0.0048
+        let rs = ((5.0 - inter1) / inter1) * 10000.0
+        let logPPM = log(rs / baseline) * -1.5512 + 2.5911
+        //let PPM = (-0.0646 * pow(Double(Double(value) / 400.0), 2.0) - 0.0587 * Double(Double(value) / 400.0) + 0.8708)
+        //let PPM = ((-0.0696)*pow(value,2.0))) - (0.0587 * Double(value)) + 0.8071
+        //let mmol = PPM * 0.25 / 1.9
+//        let rS = (Double(5 - (Double(value) * 0.0048)) / Double(Double(value) * 0.0048)) * sensorResistance
+//        let logValue = ((log10(rS/r0) * -2.6) + 2.7)
+//        let newValue = pow(10, logValue)
+//        let ppmInMMOL = (newValue / 1000.0) / 58.08
+//        let scaledPPMInMMOL = ppmInMMOL * 1000.0
         print("Value: \(value)")
-        print("Log Value: \(logValue)")
-        print("New Value: \(newValue)")
-        ketoneLevelLabel.text = "Ketone Level: \(scaledPPMInMMOL)"
+        //print("Log Value: \(logValue)")
+        //print("New Value: \(newValue)")
+        ketoneLevelLabel.text = "Ketone Level: \(logPPM)"
         ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
@@ -373,7 +380,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             queueFlag = false
             handle = dataRef.observe(.value, with: { (snapshot) in
                 if let values = snapshot.value  {
-                    let castedArray = values as? [Double]
+                    let castedArray = values as? [String:Double]
                     if castedArray != nil {
                         //print(castedArray!)
                         for level in castedArray! {
@@ -381,7 +388,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
                             //print(level)
                             //print(i)
                             i += 1
-                            self.numbers.append(level)
+                            self.numbers[level.key] = level.value
                         }
                     }
                 }
@@ -394,9 +401,14 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
                 print (self.numbers)
-                self.numbers.append(Double(scaledPPMInMMOL))
+                
+                let convertedTime = self.getConvertedTime()
+                let stringTime = String(convertedTime)
+                let newStringTime = stringTime.replacingOccurrences(of: ".", with: ",")
+                self.numbers[newStringTime] = Double(logPPM)
+                //self.numbers.append(Double(scaledPPMInMMOL))
                 dataRef.setValue(self.numbers)
-                self.numbers = []
+                self.numbers = [:]
                 self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
                 self.dismiss(animated: true, completion: nil)
             })
@@ -406,6 +418,19 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             return
         }
         //self.dismiss(animated: true, completion: nil)
+    }
+    
+    func getConvertedTime() -> Double {
+        let date = Date()
+        let calendar = Calendar.current
+        //let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+        let second = calendar.component(.second, from: date)
+        let convertedTime = /*Double(year) * 10000.0 + */Double(month) * 100.0 + Double(day) * 1.0 + Double(hour) * 0.01 + Double(minute) * 0.0001 + Double(second) * 0.000001
+        return convertedTime
     }
     
 }

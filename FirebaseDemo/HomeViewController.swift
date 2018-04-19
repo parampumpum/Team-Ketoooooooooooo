@@ -32,6 +32,7 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     @IBOutlet weak var chtChart: LineChartView!
     
     var numbers : [Double] = [] //This is where we are going to store all the numbers. This can be a set of numbers that come from a Realm database, Core data, External API's or where ever else
+    var times: [Double] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +49,16 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         _ = dataRef.observe(.value, with: { (snapshot) in
             if let values = snapshot.value  {
                 
-                let castedArray = values as? [Double]
+                let castedArray = values as? [String:Double]
                 if castedArray != nil {
-                    print(castedArray)
+                    //print(castedArray!)
+                    //self.numbers = [:]
+                    self.times = []
                     self.numbers = []
                     for level in castedArray! {
-                        self.numbers.append(level)
+                        let time = level.key.replacingOccurrences(of: ",", with: ".")
+                        self.times.append(Double(time)!)
+                        self.numbers.append(level.value)
                         print(level)
                         print(i)
                         i += 1
@@ -77,12 +82,16 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
         dataHandler = dataRef.observe(.value, with: { (snapshot) in
             if let values = snapshot.value  {
                 
-                let castedArray = values as? [Double]
+                let castedArray = values as? [String:Double]
                 if castedArray != nil {
-                    print(castedArray)
+                    //print(castedArray!)
+                    //self.numbers = [:]
+                    self.times = []
                     self.numbers = []
                     for level in castedArray! {
-                        self.numbers.append(level)
+                        let time = level.key.replacingOccurrences(of: ",", with: ".")
+                        self.times.append(Double(time)!)
+                        self.numbers.append(level.value)
                         print(level)
                         print(i)
                         i += 1
@@ -235,25 +244,36 @@ class HomeViewController:UIViewController, CBCentralManagerDelegate, CBPeriphera
     }
     
     func updateGraph(){
+        sortArrays()
         var lineChartEntry  = [ChartDataEntry]() //this is the Array that will eventually be displayed on the graph.
         
         for i in 0..<numbers.count {
+            //let value = ChartDataEntry(x: Double(tuple.element.key)!, y: tuple.element.value) // here we set the X and Y status in a data chart entry
             let value = ChartDataEntry(x: Double(i), y: numbers[i]) // here we set the X and Y status in a data chart entry
             lineChartEntry.append(value) // here we add it to the data set
         }
         
-        let line1 = LineChartDataSet(values: lineChartEntry, label: "Number") //Here we convert lineChartEntry to a LineChartDataSet
+        let line1 = LineChartDataSet(values: lineChartEntry, label: "Ketone Level") //Here we convert lineChartEntry to a LineChartDataSet
         line1.colors = [NSUIColor.yellow] //Sets the colour to blue
         
         let data = LineChartData() //This is the object that will be added to the chart
         data.addDataSet(line1) //Adds the line to the dataSet
         
-        
+        //print(numbers)
         chtChart.data = data //finally - it adds the chart data to the chart and causes an update
-        chtChart.chartDescription?.text = "My awesome chart" // Here we set the description for the graph
+        chtChart.chartDescription?.text = "Normal: < 0.6, Moderate: 0.6 - 1.5, High: 1.6 - 3.0, Danger: > 3.0" // Here we set the description for the graph
     }
 
+    @IBAction func bringUpTableView(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "toDetailTableView", sender: self)
+    }
     
-    
+    func sortArrays() -> Void {
+        let combined = zip(times, numbers).sorted(by: {$0.0 < $1.0})
+        times = combined.map({$0.0})
+        numbers = combined.map({$0.1})
+        print(times)
+        print(numbers)
+    }
     
 }
