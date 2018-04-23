@@ -15,12 +15,16 @@ class FirebaseTableViewController: UIViewController, UITableViewDataSource {
     var times: [Double] = []
     var numbers: [Double] = []
     var dataHandler: DatabaseHandle?
+    var cells: [UITableViewCell] = []
+    var numCells = 13
     
     @IBAction func exitToHome(_ sender: UIButton) {
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
         dataRef.removeObserver(withHandle: dataHandler!)
+        times = []
+        numbers = []
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -29,6 +33,7 @@ class FirebaseTableViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
+        
         let ref = Database.database().reference().child("users")
         let childRef = ref.child((Auth.auth().currentUser?.uid)!)
         let dataRef = childRef.child("data")
@@ -60,6 +65,7 @@ class FirebaseTableViewController: UIViewController, UITableViewDataSource {
         print("Times in Table Load: \(times)")
         print("Numbers in Table Load: \(numbers)")
         tableView.dataSource = self
+        tableView.register(FirebaseTableViewCell.self, forCellReuseIdentifier: "labelCellReuse")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,27 +98,41 @@ class FirebaseTableViewController: UIViewController, UITableViewDataSource {
                 
             }
         })
+        sortArrays()
         print("Times in Table Appear: \(times)")
         print("Numbers in Table Appear: \(numbers)")
-        sortArrays()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return times.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return times.count
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Ketone Reading \(section)"
+        //return "Ketone Reading \(section)"
+        if let name = Auth.auth().currentUser?.displayName! {
+            return "Ketone Readings for \(name)"
+        } else {
+            return "Ketone Readings"
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "labelCellReuse")!
+        sortArrays()
+        //print("Numbers 0: \(numbers)")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "labelCellReuse", for: indexPath)
         let deconvertedTime = deconvertTime(times[indexPath.section + indexPath.row])
+        //print("Numbers 1: \(numbers)")
         cell.textLabel?.text = "\(deconvertedTime)\tValue: \(numbers[indexPath.section + indexPath.row])"
+        //print("Numbers 2: \(numbers)")
+        print("Grabbing cell: \(indexPath.section) \(indexPath.row) \(numbers[indexPath.row])")
+        //print("Numbers 3: \(numbers)")
+        //print(numbers)
+        //print("Numbers 4: \(numbers)")
         return cell
     }
     
@@ -120,6 +140,7 @@ class FirebaseTableViewController: UIViewController, UITableViewDataSource {
         let combined = zip(times, numbers).sorted(by: {$0.0 < $1.0})
         times = combined.map({$0.0})
         numbers = combined.map({$0.1})
+        //print("Sort called")
     }
     
     func deconvertTime(_ time: Double) -> String {

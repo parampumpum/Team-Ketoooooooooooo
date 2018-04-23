@@ -287,7 +287,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
                     ketoneLevelLabel.text = "Found Ketone Characteristic"
                     ketoneLevelLabel.adjustsFontSizeToFitWidth = true
                     ketoneCharacteristic = characteristic
-                    let alertController = UIAlertController(title: "Press Yes to Continue Reading", message: "Press 'Yes' to begin reading, or press 'No' to return", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Prepare for Exhalation", message: "Please deliver a long, strong breath (~3-5 seconds), and then tap 'Yes' to measure ketone level. Tap 'No' to quit.", preferredStyle: .alert)
                     let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (alert) in
                         self.breathalyzer?.setNotifyValue(true, for: characteristic)
                     })
@@ -345,10 +345,12 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             value = Int(dataString.trimmingCharacters(in: .whitespacesAndNewlines))!
             print("Data: \(dataString)")
         }
-        let baseline = 15575.0
-        let inter1 = Double(value) * 0.0048
+        let baseline = 15575.0      //r0 constant
+        let inter1 = Double(value) * 5 / 1023
         let rs = ((5.0 - inter1) / inter1) * 10000.0
-        let logPPM = log(rs / baseline) * -1.5512 + 2.5911
+        let logPPM = (log10(rs / baseline) * -1.5512) + 2.5911
+        let PPM = pow(10, logPPM)
+        let mmolPerLiter = (PPM * 0.25) / 1.9
         //let PPM = (-0.0646 * pow(Double(Double(value) / 400.0), 2.0) - 0.0587 * Double(Double(value) / 400.0) + 0.8708)
         //let PPM = ((-0.0696)*pow(value,2.0))) - (0.0587 * Double(value)) + 0.8071
         //let mmol = PPM * 0.25 / 1.9
@@ -358,6 +360,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
 //        let ppmInMMOL = (newValue / 1000.0) / 58.08
 //        let scaledPPMInMMOL = ppmInMMOL * 1000.0
         print("Value: \(value)")
+        print("Translated Value in logPPM: \(logPPM)")
         //print("Log Value: \(logValue)")
         //print("New Value: \(newValue)")
         ketoneLevelLabel.text = "Ketone Level: \(logPPM)"
@@ -395,19 +398,30 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             })
             for second in 0..<Int(delay) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(second), execute: {
-                    self.titleLabel.text = "Please breathe out for \(Int(self.delay) - second) seconds"
+                    self.titleLabel.text = "In \(Int(self.delay) - second) seconds, this screen will record ketone level."
                     self.titleLabel.adjustsFontSizeToFitWidth = true
                 })
             }
+//            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { (timer) in
+//                print (self.numbers)
+//                let convertedTime = self.getConvertedTime()
+//                let stringTime = String(convertedTime)
+//                let newStringTime = stringTime.replacingOccurrences(of: ".", with: ",")
+//                self.numbers[newStringTime] = Double(PPM)
+//                //self.numbers.append(Double(scaledPPMInMMOL))
+//                dataRef.setValue(self.numbers)
+//                self.numbers = [:]
+//                self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
+//                self.dismiss(animated: true, completion: nil)
+//            })
+            print (self.numbers)
+            let convertedTime = self.getConvertedTime()
+            let stringTime = String(convertedTime)
+            let newStringTime = stringTime.replacingOccurrences(of: ".", with: ",")
+            self.numbers[newStringTime] = Double(logPPM)
+            //self.numbers.append(Double(scaledPPMInMMOL))
+            dataRef.setValue(self.numbers)
             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-                print (self.numbers)
-                
-                let convertedTime = self.getConvertedTime()
-                let stringTime = String(convertedTime)
-                let newStringTime = stringTime.replacingOccurrences(of: ".", with: ",")
-                self.numbers[newStringTime] = Double(logPPM)
-                //self.numbers.append(Double(scaledPPMInMMOL))
-                dataRef.setValue(self.numbers)
                 self.numbers = [:]
                 self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
                 self.dismiss(animated: true, completion: nil)

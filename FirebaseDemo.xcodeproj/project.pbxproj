@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D09CA1F1FAB7FA9002E6597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D09CA1E1FAB7FA8002E6597 /* GoogleService-Info.plist */; };
 		4D09CA211FAB8797002E6597 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09CA201FAB8797002E6597 /* HomeViewController.swift */; };
+		5B107A62208E6B5F00A7AF5B /* FirebaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B107A61208E6B5F00A7AF5B /* FirebaseTableViewCell.swift */; };
 		5B20627320297124002E9AB3 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B20627220297124002E9AB3 /* CoreBluetooth.framework */; };
 		5B2481C2205F57D00018180A /* AddNewKetoneLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2481C1205F57D00018180A /* AddNewKetoneLevelViewController.swift */; };
 		5B94ECCB2087CDDA0052A009 /* FirebaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B94ECCA2087CDDA0052A009 /* FirebaseTableViewController.swift */; };
@@ -32,6 +33,7 @@
 		14EBD8FAB16494183EAA636C /* Pods-FirebaseDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseDemo/Pods-FirebaseDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		4D09CA1E1FAB7FA8002E6597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4D09CA201FAB8797002E6597 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		5B107A61208E6B5F00A7AF5B /* FirebaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTableViewCell.swift; sourceTree = "<group>"; };
 		5B20627220297124002E9AB3 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		5B2481C1205F57D00018180A /* AddNewKetoneLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewKetoneLevelViewController.swift; sourceTree = "<group>"; };
 		5B94ECCA2087CDDA0052A009 /* FirebaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTableViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				5BC203AF2047503400546C59 /* UserPhysicalStatsViewController.swift */,
 				5B2481C1205F57D00018180A /* AddNewKetoneLevelViewController.swift */,
 				5B94ECCA2087CDDA0052A009 /* FirebaseTableViewController.swift */,
+				5B107A61208E6B5F00A7AF5B /* FirebaseTableViewCell.swift */,
 			);
 			path = FirebaseDemo;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				5B94ECCB2087CDDA0052A009 /* FirebaseTableViewController.swift in Sources */,
 				B0E106BD1F69FF76005FFE97 /* RoundedWhiteButton.swift in Sources */,
 				B0E106BE1F69FF76005FFE97 /* InitialViewController.swift in Sources */,
+				5B107A62208E6B5F00A7AF5B /* FirebaseTableViewCell.swift in Sources */,
 				B0E106BF1F69FF76005FFE97 /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
