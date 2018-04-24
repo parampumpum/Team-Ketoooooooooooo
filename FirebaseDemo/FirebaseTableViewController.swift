@@ -127,7 +127,8 @@ class FirebaseTableViewController: UIViewController, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "labelCellReuse", for: indexPath)
         let deconvertedTime = deconvertTime(times[indexPath.section + indexPath.row])
         //print("Numbers 1: \(numbers)")
-        cell.textLabel?.text = "\(deconvertedTime)\tValue: \(numbers[indexPath.section + indexPath.row])"
+        let numString = String(format: "%.5f", numbers[indexPath.section + indexPath.row])
+        cell.textLabel?.text = "\(deconvertedTime)\tValue: \(numString)"
         //print("Numbers 2: \(numbers)")
         print("Grabbing cell: \(indexPath.section) \(indexPath.row) \(numbers[indexPath.row])")
         //print("Numbers 3: \(numbers)")

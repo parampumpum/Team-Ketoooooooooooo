@@ -114,6 +114,28 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         semaphore = DispatchSemaphore(value: 1)
+        self.numbers = [:]
+        var handle: DatabaseHandle?
+        var i = 0
+        let ref = Database.database().reference().child("users")
+        let childRef = ref.child((Auth.auth().currentUser?.uid)!)
+        let dataRef = childRef.child("data")
+        handle = dataRef.observe(.value, with: { (snapshot) in
+            if let values = snapshot.value  {
+                let castedArray = values as? [String:Double]
+                if castedArray != nil {
+                    //print(castedArray!)
+                    for level in castedArray! {
+                        //dataBlock.append(level)
+                        //print(level)
+                        //print(i)
+                        i += 1
+                        self.numbers[level.key] = level.value
+                    }
+                }
+            }
+        })
+        print("At adding screen: \(self.numbers)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -340,6 +362,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
 //        for i in 0...317 {
 //            newValue = newValue * 10
 //        }
+        semaphore.wait()
         var value: Int = 0
         if let dataString = String(data: data, encoding: .utf8) {
             value = Int(dataString.trimmingCharacters(in: .whitespacesAndNewlines))!
@@ -365,37 +388,21 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         //print("New Value: \(newValue)")
         ketoneLevelLabel.text = "Ketone Level: \(logPPM)"
         ketoneLevelLabel.adjustsFontSizeToFitWidth = true
-        let ref = Database.database().reference().child("users")
-        let childRef = ref.child((Auth.auth().currentUser?.uid)!)
-        let dataRef = childRef.child("data")
+        
         //var dataBlock = [Double]()
         //here is the for loop
-        var i = 0
-        var handle: DatabaseHandle?
+        
+        //var handle: DatabaseHandle?
 //        if (newValue > 200000) {
 //            return
 //        }
-        if (value == 0) {
-            return
-        }
-        semaphore.wait()
+//        if (value == 0) {
+//            return
+//        }
+        // sempahore.wait()
         if (queueFlag) {
             queueFlag = false
-            handle = dataRef.observe(.value, with: { (snapshot) in
-                if let values = snapshot.value  {
-                    let castedArray = values as? [String:Double]
-                    if castedArray != nil {
-                        //print(castedArray!)
-                        for level in castedArray! {
-                            //dataBlock.append(level)
-                            //print(level)
-                            //print(i)
-                            i += 1
-                            self.numbers[level.key] = level.value
-                        }
-                    }
-                }
-            })
+            
             for second in 0..<Int(delay) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(second), execute: {
                     self.titleLabel.text = "In \(Int(self.delay) - second) seconds, this screen will record ketone level."
@@ -414,7 +421,10 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
 //                self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
 //                self.dismiss(animated: true, completion: nil)
 //            })
-            print (self.numbers)
+            let ref = Database.database().reference().child("users")
+            let childRef = ref.child((Auth.auth().currentUser?.uid)!)
+            let dataRef = childRef.child("data")
+            print ("Inside ketone adding: \(self.numbers)")
             let convertedTime = self.getConvertedTime()
             let stringTime = String(convertedTime)
             let newStringTime = stringTime.replacingOccurrences(of: ".", with: ",")
@@ -422,7 +432,7 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
             //self.numbers.append(Double(scaledPPMInMMOL))
             dataRef.setValue(self.numbers)
             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-                self.numbers = [:]
+                //self.numbers = [:]
                 self.centralManager.cancelPeripheralConnection(self.breathalyzer!)
                 self.dismiss(animated: true, completion: nil)
             })
