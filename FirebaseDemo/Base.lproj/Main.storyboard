@@ -709,7 +709,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Twg-2i-imb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="144.80000000000001" y="112.89355322338831"/>
+            <point key="canvasLocation" x="884" y="113"/>
         </scene>
         <!--User Physical Stats View Controller-->
         <scene sceneID="TVY-JB-Foz">
@@ -877,6 +877,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="YcR-F0-cTA"/>
-        <segue reference="qyT-5a-WUM"/>
+        <segue reference="KZp-Gr-iCw"/>
     </inferredMetricsTieBreakers>
 </document>
