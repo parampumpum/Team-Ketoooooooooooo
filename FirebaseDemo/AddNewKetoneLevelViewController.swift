@@ -386,7 +386,8 @@ class AddNewKetoneLevelViewController: UIViewController, CBCentralManagerDelegat
         print("Translated Value in logPPM: \(logPPM)")
         //print("Log Value: \(logValue)")
         //print("New Value: \(newValue)")
-        ketoneLevelLabel.text = "Ketone Level: \(logPPM)"
+        let valueString = String(format: "%.6f", logPPM)
+        ketoneLevelLabel.text = "Ketone Level: \(valueString) logPPM"
         ketoneLevelLabel.adjustsFontSizeToFitWidth = true
         
         //var dataBlock = [Double]()
